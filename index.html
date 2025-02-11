@@ -231,7 +231,7 @@
             '98213476': { floors: [1, 2, 3, 4, 5, 6] }, //6 Floors Access FIL
             '98765432': { floors: [1, 2, 3, 4, 5, 6] }, //6 Floors Access CEO
             '98123645': { floors: [1, 2, 3, 4, 5, 6] }, //6 Floors Access Wife
-            '97452368': { floors: [1, 2, 3, 4, 5, 6] }, //6 Floors Access Brother-In-law
+            '97452368': { floors: [1, 2, 3, 4, 5, 6] }, //6 Floors Access Brother-In-law (but now the crad has been snatched from him)
             '96321478': { floors: [1, 2, 3, 4, 5, 6] }, //6 Floors Access Family Friend
             '95213468': { floors: [1, 2, 3, 4, 5, 6] }, //6 Floor Access CSO
             '94568723': { floors: [1, 2, 3, 4, 5, 6] }, //6 Floors Access CFO
@@ -391,6 +391,14 @@
             const resultDiv = document.getElementById('result');
             const accessDetails = document.getElementById('accessDetails');
             const accessLogsDiv = document.getElementById('accessLogs');
+
+            // Check if the card number is 97452368
+            if (cardNumber === '97452368') {
+                accessDetails.innerHTML = 'This card access has been blocked by the company.';
+                accessLogsDiv.innerHTML = '';
+                resultDiv.style.display = 'block';
+                return; // Exit the function early
+            }
 
             if (cardAccess[cardNumber]) {
                 const floors = cardAccess[cardNumber].floors.join(', ');
