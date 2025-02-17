@@ -490,7 +490,7 @@
                 { date: '2025-02-15', timeIn: '08:00', timeOut: '17:00', floor: 4 },
             ],
             '97452368': [   // BIL (Timings are being reconsidered)
-                { date: '2025-02-16', timeIn: '08:00', timeOut: '17:00', floor: 6 },
+                { date: '2025-02-16', timeIn: '17:45', timeOut: '18:06', floor: 6 },
                 { date: '2025-02-15', timeIn: '08:00', timeOut: '17:00', floor: 4 },
             ],
             '96321478': [   // Family friend (Board Member) they are trying to make this as Stepson (Timing being re considered)
@@ -608,12 +608,12 @@
             const accessLogsDiv = document.getElementById('accessLogs');
 
             // Check if the card number is 97452368
-            if (cardNumber === '97452368') {
-                accessDetails.innerHTML = 'This card access has been blocked by the company.';
-                accessLogsDiv.innerHTML = '';
-                resultDiv.style.display = 'block';
-                return; // Exit the function early
-            }
+            //if (cardNumber === '97452368') {
+           //     accessDetails.innerHTML = 'This card access has been blocked by the company.';
+          //      accessLogsDiv.innerHTML = '';
+          //      resultDiv.style.display = 'block';
+          //      return; // Exit the function early
+         //   }
 
             if (cardAccess[cardNumber]) {
                 const floors = cardAccess[cardNumber].floors.join(', ');
