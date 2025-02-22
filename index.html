@@ -195,7 +195,7 @@
         }
 
         .button-container button {
-            width: 48%;
+            width: 32%;
             padding: 10px;
             background: #00ffcc;
             color: #000;
@@ -217,6 +217,9 @@
         .public-form {
             display: none;
         }
+        .visitor-log-form {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -231,8 +234,22 @@
     <div class="container">
         <div class="form-container">
             <div class="button-container">
+                <button onclick="showVisitorLogForm()">Visitor Log</button>
                 <button onclick="showPublicForm()">Public</button>
                 <button onclick="showPrivateForm()">Private</button>
+            </div>
+
+            <div class="visitor-log-form">
+                <h1>Visitor Log</h1>
+                <div class="form-group">
+                    <label for="visitorDate">Select Date:</label>
+                    <input type="date" id="visitorDate" required>
+                </div>
+                <button class="btn" onclick="showVisitorLog()">Show Visitor Log</button>
+                <div class="result" id="visitorLogResult">
+                    <h3>Visitor Log Details</h3>
+                    <p id="visitorLogDetails"></p>
+                </div>
             </div>
 
 
@@ -282,6 +299,12 @@
             duration: 1.5,
             delay: 3.5,
         });
+
+        // Mock Data for the Visitor Log
+        const visitorLogs = {
+            '2025-02-16': ['Philip Holloway', 'Jamie Carter', 'Food Delivery', 'Electrician'],
+            '2025-02-15': ['Skyfall Company CEO', 'Microsoft Representative', 'Pizza Delivery'],
+        };
 
         // Mock data for card access public
         const publicCardAccess = {
@@ -475,7 +498,6 @@
             '70213689': { floors: [1, 2] },
             // Add more card numbers as needed
         };
-
         const accessLogs = {
             '98213476': [   // FIL
                 { date: '2025-02-16', timeIn: '08:00', timeOut: '17:00', floor: 6 },
@@ -490,7 +512,7 @@
                 { date: '2025-02-15', timeIn: '08:00', timeOut: '17:00', floor: 4 },
             ],
             '97452368': [   // BIL (Timings are being reconsidered)
-                { date: '2025-02-16', timeIn: '17:45', timeOut: '18:06', floor: 6 },
+                { date: '2025-02-16', timeIn: '08:00', timeOut: '17:00', floor: 6 },
                 { date: '2025-02-15', timeIn: '08:00', timeOut: '17:00', floor: 4 },
             ],
             '96321478': [   // Family friend (Board Member) they are trying to make this as Stepson (Timing being re considered)
@@ -518,7 +540,7 @@
                 { date: '2025-02-14', timeIn: '08:00', timeOut: '17:00', floor: 4 },
             ],
             '90648725': [   // Personal Assistant to CEO (Timing being re considered)
-                { date: '2025-02-16', timeIn: '08:00', timeOut: '17:50', floor: 6 },
+                { date: '2025-02-16', timeIn: '08:00', timeOut: '17:00', floor: 6 },
                 { date: '2025-02-15', timeIn: '08:00', timeOut: '17:00', floor: 5 },
             ],
 
@@ -608,12 +630,12 @@
             const accessLogsDiv = document.getElementById('accessLogs');
 
             // Check if the card number is 97452368
-            //if (cardNumber === '97452368') {
-           //     accessDetails.innerHTML = 'This card access has been blocked by the company.';
-          //      accessLogsDiv.innerHTML = '';
-          //      resultDiv.style.display = 'block';
-          //      return; // Exit the function early
-         //   }
+            if (cardNumber === '97452368') {
+                accessDetails.innerHTML = 'This card access has been blocked by the company.';
+                accessLogsDiv.innerHTML = '';
+                resultDiv.style.display = 'block';
+                return; // Exit the function early
+            }
 
             if (cardAccess[cardNumber]) {
                 const floors = cardAccess[cardNumber].floors.join(', ');
@@ -660,8 +682,9 @@
             publicResultDiv.style.display = 'block';
         }
 
-        function showPublicForm() {
-            document.querySelector('.public-form').style.display = 'block';
+        function showVisitorLogForm() {
+            document.querySelector('.visitor-log-form').style.display = 'block';
+            document.querySelector('.public-form').style.display = 'none';
             document.querySelector('.private-form').style.display = 'none';
             
             // Update button styles
@@ -669,17 +692,42 @@
             document.querySelector('.button-container button:nth-child(1)').classList.add('active');
         }
 
-        function showPrivateForm() {
-            document.querySelector('.public-form').style.display = 'none';
-            document.querySelector('.private-form').style.display = 'block';
+        function showVisitorLog() {
+            const date = document.getElementById('visitorDate').value;
+            const visitorLogResultDiv = document.getElementById('visitorLogResult');
+            const visitorLogDetails = document.getElementById('visitorLogDetails');
+
+            if (visitorLogs[date]) {
+                visitorLogDetails.innerHTML = visitorLogs[date].join('<br>');
+            } else {
+                visitorLogDetails.innerHTML = 'No visitors found for this date.';
+            }
+            visitorLogResultDiv.style.display = 'block';
+        }
+
+        function showPublicForm() {
+            document.querySelector('.public-form').style.display = 'block';
+            document.querySelector('.private-form').style.display = 'none';
+            document.querySelector('.visitor-log-form').style.display = 'none';
             
             // Update button styles
             document.querySelectorAll('.button-container button').forEach(button => button.classList.remove('active'));
             document.querySelector('.button-container button:nth-child(2)').classList.add('active');
         }
 
+        function showPrivateForm() {
+            document.querySelector('.public-form').style.display = 'none';
+            document.querySelector('.private-form').style.display = 'block';
+            document.querySelector('.visitor-log-form').style.display = 'none';
+            
+            // Update button styles
+            document.querySelectorAll('.button-container button').forEach(button => button.classList.remove('active'));
+            document.querySelector('.button-container button:nth-child(3)').classList.add('active');
+        }
+
         // Initially show the Public form
         showPublicForm();
+
     </script>
 </body>
 </html>
